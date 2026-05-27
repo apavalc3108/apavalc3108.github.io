@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adrián Pavón — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06111f;
+    --surface: #0b1a2e;
+    --border: rgba(100,180,255,0.1);
+    --accent: #4EA8DE;
+    --accent2: #FF6B6B;
+    --accent3: #00E5A0;
+    --text: #e8f4ff;
+    --muted: #6a95b8;
+    --card: #0d1f35;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* — NOISE OVERLAY — */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* — GLOW BACKGROUND — */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(30,90,180,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(10,60,140,0.14) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* — NAV — */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* — HERO — */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-inner {
+    max-width: 750px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(78,168,222,0.3);
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.8;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text);
+  }
+
+  /* — SECTION LAYOUT — */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 1rem;
+  }
+
+  /* — ABOUT — */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.9;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat-item {
+    background: var(--card);
+    padding: 1.5rem;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  /* — SKILLS — */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .skill-group {
+    background: var(--card);
+    padding: 2rem;
+  }
+
+  .skill-group-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    border-color: rgba(78,168,222,0.4);
+    color: var(--accent);
+  }
+
+  /* — PROJECTS — */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--card);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .project-card:hover {
+    background: #1a1a28;
+  }
+
+  .project-card:hover .project-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .project-lang {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .project-lang.php { border-color: rgba(78,168,222,0.3); color: var(--accent); }
+  .project-lang.python { border-color: rgba(0,229,160,0.3); color: var(--accent3); }
+  .project-lang.aiml { border-color: rgba(255,107,107,0.3); color: var(--accent2); }
+
+  .project-arrow {
+    color: var(--muted);
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .project-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .project-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* — EDUCATION — */
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .edu-item {
+    background: var(--card);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .edu-school {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .edu-year {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    white-space: nowrap;
+    border: 1px solid rgba(78,168,222,0.25);
+    padding: 4px 10px;
+  }
+
+  /* — CONTACT — */
+  .contact-inner {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-inner::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(78,168,222,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* — FOOTER — */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    max-width: 100%;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-inner { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#"><span>//</span> adrián pavón</a>
+  <ul class="nav-links">
+    <li><a href="#about">sobre mí</a></li>
+    <li><a href="#skills">habilidades</a></li>
+    <li><a href="#projects">proyectos</a></li>
+    <li><a href="#education">formación</a></li>
+    <li><a href="#contact">contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">disponible para nuevas oportunidades</div>
+    <h1>Adrián<br><em>Pavón</em><br>Alcón</h1>
+    <p class="hero-sub">
+      Técnico en ASIR e IA &amp; Big Data. Construyo sistemas, entreno modelos y resuelvo problemas complejos con código limpio y arquitecturas bien pensadas.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#projects">Ver proyectos ↓</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/adrian-pavon-alcon-5b0b68369" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href="https://github.com/apavalc3108" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Sobre mí</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Soy un profesional técnico con <strong>doble formación superior</strong>: Administración de Sistemas Informáticos en Red (ASIR) e Inteligencia Artificial y Big Data. Esta combinación me permite entender tanto la infraestructura sobre la que corre el software como los modelos que lo hacen inteligente.</p>
+      <p>Me apasiona crear soluciones que van más allá del código: desde la configuración de servidores y redes hasta el diseño e implementación de algoritmos de IA como A* o LLMs. Disfruto especialmente cuando la administración de sistemas y la ciencia de datos se cruzan.</p>
+      <p>Basado en <strong>Sevilla, España</strong>. Abierto a proyectos, colaboraciones y oportunidades laborales.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Titulaciones técnicas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Repos en GitHub</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Lenguajes de prog.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ganas de aprender</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Habilidades</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">Sistemas &amp; Redes</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Windows Server</span>
+        <span class="skill-tag">TCP/IP</span>
+        <span class="skill-tag">DNS / DHCP</span>
+        <span class="skill-tag">Apache</span>
+        <span class="skill-tag">Nginx</span>
+        <span class="skill-tag">SSH</span>
+        <span class="skill-tag">Virtualización</span>
+        <span class="skill-tag">Docker</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">IA &amp; Big Data</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">LLMs</span>
+        <span class="skill-tag">Pathfinding (A*)</span>
+        <span class="skill-tag">Pandorabots / AIML</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">Scikit-learn</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Desarrollo Web</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PHP</span>
+        <span class="skill-tag">HTML / CSS</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Proyectos</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid reveal">
+
+    <a class="project-card" href="https://github.com/apavalc3108/Servidor_streaming" target="_blank">
+      <div class="project-top">
+        <span class="project-lang php">PHP</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Servidor de streaming</div>
+      <div class="project-desc">Plataforma web completa para configurar y gestionar un servidor de transmisión de vídeo en directo. Incluye autenticación de usuarios, dashboard, sistema de logs en base de datos y visualización en tiempo real.</div>
+      <div class="project-meta">
+        <span>PHP · CSS · MySQL</span>
+        <span>Proyecto final ASIR</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/apavalc3108/Astart_pathfinding" target="_blank">
+      <div class="project-top">
+        <span class="project-lang python">Python</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">A* Pathfinding</div>
+      <div class="project-desc">Implementación del algoritmo de búsqueda de caminos A* en Python con visualización gráfica interactiva. Demuestra la eficiencia del algoritmo para encontrar el camino óptimo en grafos y mapas.</div>
+      <div class="project-meta">
+        <span>Python · Algoritmos</span>
+        <span>IA aplicada</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/apavalc3108/Bienvenido_Pavon_Adrian_Gutierrez_Barranco_Miguel_Jeronimo_ProyectoFinal_IA" target="_blank">
+      <div class="project-top">
+        <span class="project-lang python">Python</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Proyecto final IA</div>
+      <div class="project-desc">Proyecto colaborativo de IA desarrollado junto a compañeros. Engloba técnicas de inteligencia artificial aplicadas a casos de uso reales, incluyendo procesamiento de datos y modelos de aprendizaje.</div>
+      <div class="project-meta">
+        <span>Python · ML</span>
+        <span>Colaborativo</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/apavalc3108/implementacion_llm" target="_blank">
+      <div class="project-top">
+        <span class="project-lang python">Python</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Implementación LLM</div>
+      <div class="project-desc">Exploración e implementación de modelos de lenguaje de gran escala (LLMs). Trabajo sobre integración, ajuste y uso de modelos de IA generativa en aplicaciones prácticas.</div>
+      <div class="project-meta">
+        <span>Python · LLMs</span>
+        <span>IA generativa</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/apavalc3108/Pandorabots_interrogatorio" target="_blank">
+      <div class="project-top">
+        <span class="project-lang aiml">AIML</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Chatbot interrogatorio</div>
+      <div class="project-desc">Chatbot conversacional desarrollado con Pandorabots y lenguaje AIML. Simula un escenario de interrogatorio con lógica de diálogo estructurada y respuestas contextuales.</div>
+      <div class="project-meta">
+        <span>AIML · Pandorabots</span>
+        <span>Chatbot</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://github.com/apavalc3108/Pandorabots_soporte" target="_blank">
+      <div class="project-top">
+        <span class="project-lang aiml">AIML</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <div class="project-name">Chatbot de soporte</div>
+      <div class="project-desc">Bot de soporte técnico automatizado construido sobre la plataforma Pandorabots. Diseñado para asistir a usuarios con preguntas frecuentes y resolver incidencias básicas de forma autónoma.</div>
+      <div class="project-meta">
+        <span>AIML · Pandorabots</span>
+        <span>Soporte técnico</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Formación</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-list reveal">
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">Técnico Superior en IA y Big Data</div>
+        <div class="edu-school">Formación Profesional de Grado Superior — España</div>
+      </div>
+      <span class="edu-year">2024 – 2026</span>
+    </div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">Administración de Sistemas Informáticos en Red (ASIR)</div>
+        <div class="edu-school">Formación Profesional de Grado Superior — España</div>
+      </div>
+      <span class="edu-year">Completado</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <h2 class="contact-title">¿Hablamos?</h2>
+    <p class="contact-sub">Estoy abierto a oportunidades laborales, proyectos freelance o simplemente a conectar con profesionales del sector.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="https://www.linkedin.com/in/adrian-pavon-alcon-5b0b68369" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href="https://github.com/apavalc3108" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Adrián Pavón Alcón</span>
+  <span>Sevilla, España</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 0.05) + 's';
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
