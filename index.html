@@ -380,6 +380,81 @@
   }
 
   .project-lang.php { border-color: rgba(78,168,222,0.3); color: var(--accent); }
+
+  .project-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: #0d1f35;
+    border-left: 3px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card.featured::before {
+    content: 'proyecto estrella';
+    position: absolute;
+    top: 1.25rem; right: 1.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(78,168,222,0.3);
+    padding: 3px 10px;
+  }
+
+  .project-card.featured:hover { background: #112540; }
+
+  .featured-left { display: flex; flex-direction: column; gap: 0.75rem; }
+  .featured-right { display: flex; flex-direction: column; gap: 0.75rem; padding-top: 0.25rem; }
+
+  .featured-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .featured-metric {
+    background: rgba(78,168,222,0.06);
+    border: 1px solid rgba(78,168,222,0.15);
+    padding: 0.6rem 0.75rem;
+  }
+
+  .featured-metric-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .featured-metric-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .featured-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .featured-stack span {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 768px) {
+    .project-card.featured { grid-template-columns: 1fr; }
+  }
   .project-lang.python { border-color: rgba(0,229,160,0.3); color: var(--accent3); }
   .project-lang.aiml { border-color: rgba(255,107,107,0.3); color: var(--accent2); }
 
@@ -662,6 +737,33 @@
     <div class="section-line"></div>
   </div>
   <div class="projects-grid reveal">
+
+    <!-- PROYECTO ESTRELLA -->
+    <a class="project-card featured" href="https://github.com/apavalc3108/ProyectoIntermodular" target="_blank">
+      <div class="featured-left">
+        <div class="project-top">
+          <span class="project-lang python">Python · ML · NLP</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <div class="project-name" style="font-size:1.3rem;">GreenLight AI</div>
+        <div class="project-desc">Sistema de Soporte a la Decisión (DSS) híbrido para la <strong style="color:var(--text)">prevención de lesiones en el fútbol profesional</strong>. Combina un ensemble de ML (XGBoost, LightGBM, CatBoost, Random Forest) con NLP vía Mistral AI y un sistema experto clínico. Emite semáforo 🔴 ROJO · 🟡 ÁMBAR · 🟢 VERDE con tiempo estimado de baja.</div>
+        <div class="project-meta" style="margin-top:auto;"><span>Proyecto Fin de Máster IA &amp; Big Data · Mayo 2026</span></div>
+      </div>
+      <div class="featured-right">
+        <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">métricas del modelo stacking</div>
+        <div class="featured-metrics">
+          <div class="featured-metric"><div class="featured-metric-val">0.8156</div><div class="featured-metric-label">AUC-ROC</div></div>
+          <div class="featured-metric"><div class="featured-metric-val">0.7154</div><div class="featured-metric-label">Recall</div></div>
+          <div class="featured-metric"><div class="featured-metric-val">30.000</div><div class="featured-metric-label">registros sintéticos</div></div>
+          <div class="featured-metric"><div class="featured-metric-val">6</div><div class="featured-metric-label">modelos comparados</div></div>
+        </div>
+        <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:1rem;margin-bottom:0.5rem;">stack tecnológico</div>
+        <div class="featured-stack">
+          <span>Scikit-learn</span><span>XGBoost</span><span>LightGBM</span><span>CatBoost</span><span>SHAP</span><span>Mistral API</span><span>Streamlit</span><span>Plotly</span><span>ReportLab</span>
+        </div>
+      </div>
+    </a>
+
 
     <a class="project-card" href="https://github.com/apavalc3108/Servidor_streaming" target="_blank">
       <div class="project-top">
